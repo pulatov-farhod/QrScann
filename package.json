@@ -8,10 +8,14 @@
       "android"
     ]
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bitpay/cordova-plugin-qrscanner"
+  },
   "keywords": [
     "ecosystem:cordova",
     "cordova-android"
   ],
-  "author": "",
+  "author": "Mansur Rizoev",
   "license": "ISC"
 }
