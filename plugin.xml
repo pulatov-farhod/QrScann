@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="com.qrscan.plugin" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>QrScann</name><js-module name="QrScann" src="www/QrScann.js">
+    <clobbers target="cordova.plugins.QrScann" /></js-module>
+    <platform name="android">
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="QrScann">
+                <param name="android-package" value="com.qrscan.plugin.QrScann" />
+            </feature>
+        </config-file>
+         <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <activity android:label="Qr Activity" android:name="com.qrscan.plugin.QrActivity"></activity>
+        </config-file>
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.FLASHLIGHT" android:required="false"/>
+			<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:required="false"/>
+            <uses-permission android:name="android.permission.CAMERA" android:required="false" />
+            <uses-feature android:name="android.hardware.camera" android:required="false" />
+            <uses-feature android:name="android.hardware.camera.front" android:required="false" />
+        </config-file>
+        <framework src="src/android/qq.gradle" custom="true" type="gradleReference"/>
+        <source-file src="src/android/QrScann.java" target-dir="src/com/qrscan/plugin" />
+        <source-file src="src/android/QrActivity.java" target-dir="src/com/qrscan/plugin" />
+        <source-file src="src/android/activity_qr.xml" target-dir="res/layout" />
+        <source-file src="src/android/qrcolors.xml" target-dir="res/values" />
+        <source-file src="src/android/qrstyles.xml" target-dir="res/values" />
+    </platform>
+</plugin>
