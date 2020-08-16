@@ -25,4 +25,15 @@
         <source-file src="src/android/qrcolors.xml" target-dir="res/values" />
         <source-file src="src/android/qrstyles.xml" target-dir="res/values" />
     </platform>
+    <platform name="ios">
+        <dependency id="cordova-plugin-cocoapod-support"/>
+        <dependency id="cordova-plugin-add-swift-support" version="2.0.2"/>
+        <pod name="SwiftQRScanner" git="https://github.com/pulatov-farhod/SwiftQRCodeScanner.git"  />
+        <config-file parent="/*" target="config.xml">
+            <feature name="QrScann">
+            <param name="ios-package" value="QrScann" />
+            </feature>
+        </config-file>
+        <source-file src="src/ios/QrScann.swift" />
+    </platform>
 </plugin>
