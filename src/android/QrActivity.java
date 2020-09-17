@@ -56,6 +56,8 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
 
         getActionBar().hide();
         //getSupportActionBar().hide();
+        Intent intent = getIntent();
+        
         String package_name = getApplication().getPackageName();
         setContentView(getApplication().getResources().getIdentifier("activity_qr", "layout", package_name));
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -74,6 +76,17 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
         contentFrame.addView(mScannerView);
 
         Button btn = findViewById(getApplication().getResources().getIdentifier("button", "id", package_name));
+        Button btn2 = findViewById(getApplication().getResources().getIdentifier("button2", "id", package_name));
+        Button btn3 = findViewById(getApplication().getResources().getIdentifier("button3", "id", package_name));
+        String dt =intent.getStringExtra("LNG");
+        if(dt.equals("tj")||dt.equals("TJ")){
+            btn.setText("Хондани аз QR галереи");
+            btn3.setText("Чароғак");
+        }else if(dt.equals("ru") || dt.equals("RU")){
+            btn.setText("Считать QR галереи");
+            btn3.setText("Фонарик");
+        }
+
         btn.setOnClickListener( new View.OnClickListener() {
 
             @Override
@@ -87,7 +100,6 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
             }
         });
 
-        Button btn2 = findViewById(getApplication().getResources().getIdentifier("button2", "id", package_name));
         btn2.setOnClickListener( new View.OnClickListener() {
 
             @Override
@@ -97,9 +109,8 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
             }
         });
 
-        Button btn3 = findViewById(getApplication().getResources().getIdentifier("button3", "id", package_name));
         btn3.setOnClickListener( new View.OnClickListener() {
-
+       
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
