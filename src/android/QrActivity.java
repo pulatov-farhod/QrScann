@@ -80,10 +80,10 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
         Button btn3 = findViewById(getApplication().getResources().getIdentifier("button3", "id", package_name));
         String dt =intent.getStringExtra("LNG");
         if(dt.equals("tj")||dt.equals("TJ")){
-            btn.setText("Хондани аз QR галереи");
+            btn.setText("Боргирии QR аз галерея");
             btn3.setText("Чароғак");
         }else if(dt.equals("ru") || dt.equals("RU")){
-            btn.setText("Считать QR галереи");
+            btn.setText("QR загрузить с галереи");
             btn3.setText("Фонарик");
         }
 
