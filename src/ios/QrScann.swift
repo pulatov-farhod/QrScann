@@ -7,15 +7,15 @@ import SwiftQRScanner
     var window: UIWindow?
   
     var commId: CDVInvokedUrlCommand?;
-  
+   
     @objc(qrRun:) func qrRun(command: CDVInvokedUrlCommand){
     
     commId = command
 
     let scanner = QRCodeScannerController()
-    
+    let msg  = command.arguments[0] as? String ?? ""
     scanner.delegate = self
-
+    scanner.loc = msg
     self.viewController?.present(
           scanner,
           animated: true,
