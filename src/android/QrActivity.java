@@ -49,6 +49,7 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
     private static final int MY_REQUEST_CODE_PERMISSION = 1000;
     private static final int MY_RESULT_CODE_FILECHOOSER = 2000;
     
+    private static List<BarcodeFormat> formats = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle state) {
@@ -73,6 +74,11 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
         //R.id.content_frame
         ViewGroup contentFrame = (ViewGroup) findViewById(getApplication().getResources().getIdentifier("content_frame", "id", package_name));
         mScannerView = new ZXingScannerView(this);
+        
+        formats.add(BarcodeFormat.QR_CODE);
+        formats.add(BarcodeFormat.CODE_128);
+        mScannerView.setFormats(formats);
+        
         contentFrame.addView(mScannerView);
 
         Button btn = findViewById(getApplication().getResources().getIdentifier("button", "id", package_name));
