@@ -33,7 +33,7 @@
 			<source url="https://cdn.cocoapods.org/"/>
 		</config>
 		<pods use-frameworks="true">
-			<pod name="SwiftQRCodeScanner" git="https://github.com/pulatov-farhod/SwiftQRCodeScanner.git"  />
+			<pod name="SwiftQRScanner" git="https://github.com/pulatov-farhod/SwiftQRCodeScanner.git"  />
 		</pods>
 	</podspec>
         <config-file parent="/*" target="config.xml">
