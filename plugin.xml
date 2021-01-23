@@ -28,10 +28,17 @@
     <platform name="ios">
         <dependency id="cordova-plugin-cocoapod-support"/>
         <dependency id="cordova-plugin-add-swift-support" version="2.0.2"/>
-        <pod name="SwiftQRScanner" git="https://github.com/pulatov-farhod/SwiftQRCodeScanner.git"  />
+	<podspec>
+		<config>
+			<source url="https://cdn.cocoapods.org/"/>
+		</config>
+		<pods use-frameworks="true">
+			<pod name="SwiftQRCodeScanner" git="https://github.com/pulatov-farhod/SwiftQRCodeScanner.git"  />
+		</pods>
+	</podspec>
         <config-file parent="/*" target="config.xml">
             <feature name="QrScann">
-            <param name="ios-package" value="QrScann" />
+            	<param name="ios-package" value="QrScann" />
             </feature>
         </config-file>
         <source-file src="src/ios/QrScann.swift" />
