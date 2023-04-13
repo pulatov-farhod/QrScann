@@ -43,6 +43,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.Paint;
 
 public class QrActivity extends Activity implements ZXingScannerView.ResultHandler {
     private ZXingScannerView mScannerView;
@@ -147,15 +150,15 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
             contents = result.getText();
         }
         catch (Exception e) {
-            contents = "";
-            Log.e("QR_READER", "Error img", e);
+            //contents = "";
+            Log.e("QR_READER", "error img", e);
         }
         return contents;
     }
 
     public void openInGallery() {
 
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         startActivityForResult(intent, 0);
     }
@@ -189,36 +192,94 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
 
     @Override
     protected void onActivityResult(int reqCode, int resCode, Intent data) {
+     
         if(resCode == Activity.RESULT_OK && data != null){
-            String realPath;
-            // SDK < API11
-            if (Build.VERSION.SDK_INT < 11) {
-                realPath = RealPathUtil.getRealPathFromURI_BelowAPI11(this, data.getData());
-            }
-
-            // SDK >= 11 && SDK < 19
-            else if (Build.VERSION.SDK_INT < 19) {
-                realPath = RealPathUtil.getRealPathFromURI_API11to18(this, data.getData());
-            }
-
-            // SDK > 19 (Android 4.4)
-            else {
-                realPath = RealPathUtil.getRealPathFromURI_API19(this, data.getData());
-            }
-
-            InputStream is = null;
-            try {
-                is = new BufferedInputStream(new FileInputStream(realPath));
+           
+            try { 
+                Bitmap originalImage  = null;
+                Bitmap background = null;
+                String content;
+                float originalWidth;
+                float originalHeight;
+                Canvas canvas;
+                float scale;
+                float xTranslation;
+                float yTranslation;
+                Matrix transformation;
+                Paint paint;
+                final Uri imageUri = data.getData();
+        
+                final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+        
+                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+        
+                originalImage = selectedImage;
+        
+                background = Bitmap.createBitmap(1500,1500, Bitmap.Config.ARGB_8888);
+        
+                originalWidth = originalImage.getWidth();
+                originalHeight = originalImage.getHeight();
+        
+                canvas = new Canvas(background);
+        
+                scale = 1500 / originalWidth;
+        
+                xTranslation = 0.0f;
+                yTranslation = (1500 - originalHeight * scale) / 2.0f;
+        
+                transformation = new Matrix();
+                transformation.postTranslate(xTranslation, yTranslation);
+                transformation.preScale(scale, scale);
+        
+                paint = new Paint();
+                paint.setFilterBitmap(true);
+        
+                canvas.drawBitmap(originalImage, transformation, paint);
+                content = scanQRImage(background);
+                if(content == null){
+                    background = Bitmap.createBitmap(900,900, Bitmap.Config.ARGB_8888);
+        
+                    originalWidth = originalImage.getWidth();
+                    originalHeight = originalImage.getHeight();
+        
+                    canvas = new Canvas(background);
+        
+                    scale = 900 / originalWidth;
+        
+                    xTranslation = 0.0f;
+                    yTranslation = (900 - originalHeight * scale) / 2.0f;
+        
+                    transformation = new Matrix();
+                    transformation.postTranslate(xTranslation, yTranslation);
+                    transformation.preScale(scale, scale);
+        
+                    paint = new Paint();
+                    paint.setFilterBitmap(true);
+        
+                    canvas.drawBitmap(originalImage, transformation, paint);
+                    content = scanQRImage(background);
+                    if(content != null){
+                        setResult(Activity.RESULT_OK, new Intent().putExtra("QrResult", content));
+                    }else{
+                        setResult(Activity.RESULT_OK, new Intent().putExtra("QrResult", content));
+                        //setResult(Activity.RESULT_CANCELED);
+                    }
+                }else{
+                    if(content != null){
+                        setResult(Activity.RESULT_OK, new Intent().putExtra("QrResult", content));
+                    }else{
+                        setResult(Activity.RESULT_CANCELED);
+                    }
+                }
+        
+               
+           
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-            Bitmap bitmap = BitmapFactory.decodeStream(is);
-            String decoded=scanQRImage(bitmap);
-
-            if(decoded!=null)
-                setResult(Activity.RESULT_OK, new Intent().putExtra("QrResult", decoded));
-            else
-                setResult(Activity.RESULT_CANCELED);
+            
+           
+          
             finish();
         }
     }
