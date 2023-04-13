@@ -147,7 +147,8 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
             contents = result.getText();
         }
         catch (Exception e) {
-            Log.e("QR_READER", "Error decoding barcode", e);
+            contents = "";
+            Log.e("QR_READER", "Error img", e);
         }
         return contents;
     }
