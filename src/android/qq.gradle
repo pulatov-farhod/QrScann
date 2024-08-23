@@ -1,7 +1,9 @@
 repositories {
     jcenter()
     google()
-    mavenCentral()
+    maven {
+        url "http://dl.bintray.com/journeyapps/maven"
+    }
 }
 
 dependencies {
