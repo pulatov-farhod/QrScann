@@ -166,7 +166,7 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
     private boolean askPermissionAndBrowseFile()  {
         // With Android Level >= 23, you have to ask the user
         // for permission to access External Storage.
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M && &&
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M &&
         (
                 ContextCompat.checkSelfPermission(context, READ_MEDIA_IMAGES) == PERMISSION_GRANTED ||
                         ContextCompat.checkSelfPermission(context, READ_MEDIA_VIDEO) == PERMISSION_GRANTED
