@@ -1,8 +1,6 @@
 repositories {
-    jcenter()
-    google()
     maven {
-        url "http://dl.bintray.com/journeyapps/maven"
+        url "https://dl.bintray.com/journeyapps/maven"
     }
 }
 
