@@ -49,7 +49,6 @@ import android.graphics.Paint;
 import android.content.Context;
 import static android.Manifest.permission.READ_MEDIA_IMAGES;
 import static android.Manifest.permission.READ_MEDIA_VIDEO;
-import static android.Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 public class QrActivity extends Activity implements ZXingScannerView.ResultHandler {
     private ZXingScannerView mScannerView;
