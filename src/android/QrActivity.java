@@ -50,11 +50,12 @@ import android.content.Context;
 import static android.Manifest.permission.READ_MEDIA_IMAGES;
 import static android.Manifest.permission.READ_MEDIA_VIDEO;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
+
+import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.activity.result.ActivityResult;
-
-public class QrActivity extends Activity implements ZXingScannerView.ResultHandler {
+import androidx.appcompat.app.AppCompatActivity;
+public class QrActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
     private ZXingScannerView mScannerView;
     private static final int ZXING_CAMERA_PERMISSION = 1;
     private Class<?> mClss;
