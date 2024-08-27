@@ -200,7 +200,7 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
     @Override
     protected void onActivityResult(int reqCode, int resCode, Intent data) {
      
-        if(resCode == Activity.RESULT_OK && data != null){
+        if(resCode == Activity.RESULT_OK && resCode == Activity.SELECT_PICTURE){
            
             try { 
                 Bitmap originalImage  = null;
