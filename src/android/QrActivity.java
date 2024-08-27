@@ -200,7 +200,7 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
     @Override
     protected void onActivityResult(int reqCode, int resCode, Intent data) {
      
-        if(resCode == Activity.RESULT_OK && reqCode == SELECT_PICTURE){
+        if(resCode == Activity.RESULT_OK && reqCode == MY_RESULT_CODE_FILECHOOSER){
            
             try { 
                 Bitmap originalImage  = null;
@@ -288,6 +288,8 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
            
           
             finish();
+        }else{
+            Toast.makeText(this, "Else else else!", Toast.LENGTH_SHORT).show();
         }
     }
 
