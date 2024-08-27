@@ -289,7 +289,8 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
           
             finish();
         }else{
-            Toast.makeText(this, "Else else else!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, resCode, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, reqCode, Toast.LENGTH_SHORT).show();
         }
     }
 
