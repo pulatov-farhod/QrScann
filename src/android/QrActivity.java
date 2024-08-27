@@ -146,7 +146,7 @@ public class QrActivity extends AppCompatActivity implements ZXingScannerView.Re
                 result -> {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         // Handle the Intent
-//                        Intent data = result.getData();
+                        Intent data = result.getData();
                         // Do something with the result
 
 //                        if(resCode == Activity.RESULT_OK && reqCode == MY_RESULT_CODE_FILECHOOSER){
@@ -163,7 +163,7 @@ public class QrActivity extends AppCompatActivity implements ZXingScannerView.Re
                                 float yTranslation;
                                 Matrix transformation;
                                 Paint paint;
-                                final Uri imageUri = result.getData();
+                                final Uri imageUri = data.getData();
 
                                 final InputStream imageStream = getContentResolver().openInputStream(imageUri);
 
