@@ -232,10 +232,9 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
 
 
                             finish();
-                        }else{
-                            Toast.makeText(this, String.valueOf(resCode), Toast.LENGTH_SHORT).show();
-                            Toast.makeText(this, String.valueOf(reqCode), Toast.LENGTH_SHORT).show();
-                        }
+                    }else{
+                        Toast.makeText(this, String.valueOf(resCode), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, String.valueOf(reqCode), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
