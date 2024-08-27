@@ -57,7 +57,7 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
 
     private static final int MY_REQUEST_CODE_PERMISSION = 1000;
     private static final int MY_RESULT_CODE_FILECHOOSER = 2000;
-    
+    int SELECT_PICTURE = 200;
     private static List<BarcodeFormat> formats = new ArrayList<>();
     Context context;
     @Override
@@ -200,7 +200,7 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
     @Override
     protected void onActivityResult(int reqCode, int resCode, Intent data) {
      
-        if(resCode == Activity.RESULT_OK && reqCode == Activity.SELECT_PICTURE){
+        if(resCode == Activity.RESULT_OK && reqCode == SELECT_PICTURE){
            
             try { 
                 Bitmap originalImage  = null;
