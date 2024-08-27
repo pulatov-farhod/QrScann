@@ -52,6 +52,7 @@ import static android.Manifest.permission.READ_MEDIA_VIDEO;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.activity.result.ActivityResult;
 
 public class QrActivity extends Activity implements ZXingScannerView.ResultHandler {
     private ZXingScannerView mScannerView;
