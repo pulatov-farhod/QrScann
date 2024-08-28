@@ -415,6 +415,28 @@ public class QrActivity extends AppCompatActivity implements ZXingScannerView.Re
         }
     }
 
+    private String readQRCode(@NonNull Bitmap bitmap) {
+        try {
+            int width = bitmap.getWidth();
+            int height = bitmap.getHeight();
+            int[] pixels = new int[width * height];
+            bitmap.getPixels(pixels, 0, width, 0, 0, width, height);
+
+            RGBLuminanceSource source = new RGBLuminanceSource(width, height, pixels);
+            BinaryBitmap binaryBitmap = new BinaryBitmap(new HybridBinarizer(source));
+
+            Reader reader = new MultiFormatReader();
+            Result result = reader.decode(binaryBitmap);
+
+            return result.getText();
+        } catch (Resources.NotFoundException | ChecksumException | FormatException e) {
+            e.printStackTrace();
+            return null;
+        } catch (NotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private ActivityResultLauncher<Intent> galleryLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
