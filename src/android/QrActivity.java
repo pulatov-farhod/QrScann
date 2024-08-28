@@ -76,7 +76,7 @@ public class QrActivity extends AppCompatActivity implements ZXingScannerView.Re
     @Override
     public void onCreate(Bundle state) {
         super.onCreate(state);
-
+        setTheme(R.style.AppOverlayTheme);
         getActionBar().hide();
         //getSupportActionBar().hide();
         Intent intent = getIntent();
