@@ -419,6 +419,7 @@ public class QrActivity extends AppCompatActivity implements ZXingScannerView.Re
             return qrContent;
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
     }
 
