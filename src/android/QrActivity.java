@@ -107,6 +107,8 @@ public class QrActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                finish();
+                
                 // TODO Auto-generated method stub
 //                if(!mScannerView.getFlash())
 //                    mScannerView.setFlash(true);
