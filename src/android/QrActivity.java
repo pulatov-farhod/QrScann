@@ -416,10 +416,12 @@ public class QrActivity extends AppCompatActivity implements ZXingScannerView.Re
                 // Failed to read QR code
                 Log.d("QRCodeReader", "No QR Code found in the image");
             }
+            return qrContent;
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
+
         }
-        return qrContent;
     }
 
     private static String readQRCode(Bitmap bitmap) {
