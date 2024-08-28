@@ -141,106 +141,7 @@ public class QrActivity extends AppCompatActivity implements ZXingScannerView.Re
                     mScannerView.setFlash(false);
             }
         });
-        someActivityResultLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        // Handle the Intent
-                        Intent data = result.getData();
-                        // Do something with the result
 
-//                        if(resCode == Activity.RESULT_OK && reqCode == MY_RESULT_CODE_FILECHOOSER){
-
-                            try {
-                                Bitmap originalImage  = null;
-                                Bitmap background = null;
-                                String content;
-                                float originalWidth;
-                                float originalHeight;
-                                Canvas canvas;
-                                float scale;
-                                float xTranslation;
-                                float yTranslation;
-                                Matrix transformation;
-                                Paint paint;
-                                final Uri imageUri = data.getData();
-
-                                final InputStream imageStream = getContentResolver().openInputStream(imageUri);
-
-                                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-
-                                originalImage = selectedImage;
-
-                                background = Bitmap.createBitmap(1500,1500, Bitmap.Config.ARGB_8888);
-
-                                originalWidth = originalImage.getWidth();
-                                originalHeight = originalImage.getHeight();
-
-                                canvas = new Canvas(background);
-
-                                scale = 1500 / originalWidth;
-
-                                xTranslation = 0.0f;
-                                yTranslation = (1500 - originalHeight * scale) / 2.0f;
-
-                                transformation = new Matrix();
-                                transformation.postTranslate(xTranslation, yTranslation);
-                                transformation.preScale(scale, scale);
-
-                                paint = new Paint();
-                                paint.setFilterBitmap(true);
-
-                                canvas.drawBitmap(originalImage, transformation, paint);
-                                content = scanQRImage(background);
-                                if(content == null){
-                                    background = Bitmap.createBitmap(900,900, Bitmap.Config.ARGB_8888);
-
-                                    originalWidth = originalImage.getWidth();
-                                    originalHeight = originalImage.getHeight();
-
-                                    canvas = new Canvas(background);
-
-                                    scale = 900 / originalWidth;
-
-                                    xTranslation = 0.0f;
-                                    yTranslation = (900 - originalHeight * scale) / 2.0f;
-
-                                    transformation = new Matrix();
-                                    transformation.postTranslate(xTranslation, yTranslation);
-                                    transformation.preScale(scale, scale);
-
-                                    paint = new Paint();
-                                    paint.setFilterBitmap(true);
-
-                                    canvas.drawBitmap(originalImage, transformation, paint);
-                                    content = scanQRImage(background);
-                                    if(content != null){
-                                        setResult(Activity.RESULT_OK, new Intent().putExtra("QrResult", content));
-                                    }else{
-                                        setResult(Activity.RESULT_OK, new Intent().putExtra("QrResult", content));
-                                        //setResult(Activity.RESULT_CANCELED);
-                                    }
-                                }else{
-                                    if(content != null){
-                                        setResult(Activity.RESULT_OK, new Intent().putExtra("QrResult", content));
-                                    }else{
-                                        setResult(Activity.RESULT_CANCELED);
-                                    }
-                                }
-
-
-
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
-                            }
-
-
-
-                            finish();
-                    }else{
-                        Toast.makeText(this, String.valueOf(result.getResultCode()), Toast.LENGTH_SHORT).show();
-                    }
-                });
     }
 
     public static String scanQRImage(Bitmap bMap) {
@@ -269,7 +170,8 @@ public class QrActivity extends AppCompatActivity implements ZXingScannerView.Re
 
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
-        someActivityResultLauncher.launch(intent);
+        galleryLauncher.launch(intent);
+//        someActivityResultLauncher.launch(intent);
 //        startActivityForResult(intent, 0);
     }
 
@@ -493,5 +395,121 @@ public class QrActivity extends AppCompatActivity implements ZXingScannerView.Re
             return cursor.getString(column_index);
         }
     }
+    private readQRCodeFromImage(Uri imageUri) {
+        try {
+            InputStream inputStream = getContentResolver().openInputStream(imageUri);
+            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+            String qrContent = readQRCode(bitmap);
+
+            if (qrContent != null) {
+                // QR code successfully read
+                Log.d("QRCodeReader", "QR Code content: " + qrContent);
+                // Do something with the QR code content
+            } else {
+                // Failed to read QR code
+                Log.d("QRCodeReader", "No QR Code found in the image");
+            }
+            return qrContent;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private ActivityResultLauncher<Intent> galleryLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    Intent data = result.getData();
+                    if (data != null && data.getData() != null) {
+                        try {
+                            Bitmap originalImage  = null;
+                            Bitmap background = null;
+                            String content;
+                            float originalWidth;
+                            float originalHeight;
+                            Canvas canvas;
+                            float scale;
+                            float xTranslation;
+                            float yTranslation;
+                            Matrix transformation;
+                            Paint paint;
+                            final Uri imageUri = data.getData();
+
+                            final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+
+                            final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+
+                            originalImage = selectedImage;
+
+                            background = Bitmap.createBitmap(1500,1500, Bitmap.Config.ARGB_8888);
+
+                            originalWidth = originalImage.getWidth();
+                            originalHeight = originalImage.getHeight();
+
+                            canvas = new Canvas(background);
+
+                            scale = 1500 / originalWidth;
+
+                            xTranslation = 0.0f;
+                            yTranslation = (1500 - originalHeight * scale) / 2.0f;
+
+                            transformation = new Matrix();
+                            transformation.postTranslate(xTranslation, yTranslation);
+                            transformation.preScale(scale, scale);
+
+                            paint = new Paint();
+                            paint.setFilterBitmap(true);
+
+                            canvas.drawBitmap(originalImage, transformation, paint);
+                            content = readQRCodeFromImage(imageUri);
+//                            content = scanQRImage(background);
+                            if(content == null){
+                                background = Bitmap.createBitmap(900,900, Bitmap.Config.ARGB_8888);
+
+                                originalWidth = originalImage.getWidth();
+                                originalHeight = originalImage.getHeight();
+
+                                canvas = new Canvas(background);
+
+                                scale = 900 / originalWidth;
+
+                                xTranslation = 0.0f;
+                                yTranslation = (900 - originalHeight * scale) / 2.0f;
+
+                                transformation = new Matrix();
+                                transformation.postTranslate(xTranslation, yTranslation);
+                                transformation.preScale(scale, scale);
+
+                                paint = new Paint();
+                                paint.setFilterBitmap(true);
+
+                                canvas.drawBitmap(originalImage, transformation, paint);
+//                                content = scanQRImage(background);
+                                content = readQRCodeFromImage(imageUri);
+
+                                if(content != null){
+                                    setResult(Activity.RESULT_OK, new Intent().putExtra("QrResult", content));
+                                }else{
+                                    setResult(Activity.RESULT_OK, new Intent().putExtra("QrResult", content));
+                                    //setResult(Activity.RESULT_CANCELED);
+                                }
+                            }else{
+                                if(content != null){
+                                    setResult(Activity.RESULT_OK, new Intent().putExtra("QrResult", content));
+                                }else{
+                                    setResult(Activity.RESULT_CANCELED);
+                                }
+                            }
+
+
+
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                        finish();
+                    }
+                }
+            }
+    );
 }
 
