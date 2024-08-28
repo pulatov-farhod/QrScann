@@ -395,7 +395,7 @@ public class QrActivity extends AppCompatActivity implements ZXingScannerView.Re
             return cursor.getString(column_index);
         }
     }
-    private readQRCodeFromImage(Uri imageUri) {
+    private static String readQRCodeFromImage(Uri imageUri) {
         try {
             InputStream inputStream = getContentResolver().openInputStream(imageUri);
             Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
