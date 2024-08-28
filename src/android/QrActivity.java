@@ -59,7 +59,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
-
+import java.io.IOException;
+import java.io.InputStream;
 public class QrActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
     private ZXingScannerView mScannerView;
     private static final int ZXING_CAMERA_PERMISSION = 1;
