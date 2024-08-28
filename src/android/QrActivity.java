@@ -415,7 +415,7 @@ public class QrActivity extends AppCompatActivity implements ZXingScannerView.Re
         }
     }
 
-    private String readQRCode(@NonNull Bitmap bitmap) {
+    private String readQRCode(Bitmap bitmap) {
         try {
             int width = bitmap.getWidth();
             int height = bitmap.getHeight();

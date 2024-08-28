@@ -4,6 +4,7 @@ repositories {
 }
 
 dependencies {
+    implementation("androidx.appcompat:appcompat:1.7.0")
     implementation 'me.dm7.barcodescanner:zxing:1.9'
     implementation 'com.journeyapps:zxing-android-embedded:4.1.0'
 //    implementation 'me.dm7.barcodescanner:zxing:1.9.13'
