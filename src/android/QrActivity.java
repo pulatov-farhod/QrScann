@@ -58,6 +58,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import android.content.res.Resources;
 
 import java.io.IOException;
 import java.io.InputStream;
