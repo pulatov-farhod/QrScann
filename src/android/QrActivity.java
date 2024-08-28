@@ -94,28 +94,29 @@ public class QrActivity extends AppCompatActivity {
             }
         });
 
-        btn2.setOnClickListener( new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                finish();
-            }
-        });
-
-        btn3.setOnClickListener( new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                finish();
-                
-                // TODO Auto-generated method stub
-//                if(!mScannerView.getFlash())
-//                    mScannerView.setFlash(true);
-//                else
-//                    mScannerView.setFlash(false);
-            }
-        });
+//        btn2.setOnClickListener( new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                // TODO Auto-generated method stub
+//                finish();
+//            }
+//        });
+//
+//        btn3.setOnClickListener( new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                // TODO Auto-generated method stub
+//                finish();
+//
+//                // TODO Auto-generated method stub
+////                if(!mScannerView.getFlash())
+////                    mScannerView.setFlash(true);
+////                else
+////                    mScannerView.setFlash(false);
+//            }
+//        });
     }
     public void openInGallery() {
 
