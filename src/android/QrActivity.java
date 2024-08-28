@@ -395,9 +395,9 @@ public class QrActivity extends AppCompatActivity implements ZXingScannerView.Re
             return cursor.getString(column_index);
         }
     }
-    private static String readQRCodeFromImage(Uri imageUri) {
+    private static String readQRCodeFromImage(Context context,Uri imageUri) {
         try {
-            InputStream inputStream = getContentResolver().openInputStream(imageUri);
+            InputStream inputStream = context.getContentResolver().openInputStream(imageUri);
             Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
             String qrContent = readQRCode(bitmap);
 
@@ -483,7 +483,7 @@ public class QrActivity extends AppCompatActivity implements ZXingScannerView.Re
                             paint.setFilterBitmap(true);
 
                             canvas.drawBitmap(originalImage, transformation, paint);
-                            content = readQRCodeFromImage(imageUri);
+                            content = readQRCodeFromImage(context,imageUri);
 //                            content = scanQRImage(background);
                             if(content == null){
                                 background = Bitmap.createBitmap(900,900, Bitmap.Config.ARGB_8888);
@@ -507,7 +507,7 @@ public class QrActivity extends AppCompatActivity implements ZXingScannerView.Re
 
                                 canvas.drawBitmap(originalImage, transformation, paint);
 //                                content = scanQRImage(background);
-                                content = readQRCodeFromImage(imageUri);
+                                content = readQRCodeFromImage(context,imageUri);
 
                                 if(content != null){
                                     setResult(Activity.RESULT_OK, new Intent().putExtra("QrResult", content));
