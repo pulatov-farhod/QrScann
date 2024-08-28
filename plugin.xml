@@ -8,10 +8,12 @@
                 <param name="android-package" value="com.qrscan.plugin.QrScann" />
             </feature>
         </config-file>
-         <config-file target="AndroidManifest.xml" parent="/manifest/application">
-            <activity android:label="Qr Activity" android:name="com.qrscan.plugin.QrActivity"></activity>
+
+         <config-file target="AndroidManifest.xml" parent="/manifest/application" >
+            <activity android:label="Qr Activity" android:name="com.qrscan.plugin.QrActivity"  android:theme="@style/Theme.AppCompat.Light"></activity>
         </config-file>
         <config-file target="AndroidManifest.xml" parent="/manifest">
+            <application android:theme="@style/Theme.AppCompat.Light"/>
             <uses-permission android:name="android.permission.FLASHLIGHT" android:required="false"/>
 			<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:required="false"/>
             <uses-permission android:name="android.permission.CAMERA" android:required="false" />
