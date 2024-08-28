@@ -84,12 +84,13 @@ public class QrActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                if(askPermissionAndBrowseFile()) {
-                    Log.d("QR_11","hiiiiiii");
-                    openInGallery();
-                } else {
-                    Log.d("QR_READER", "ERROR PERMISSION");
-                }
+                checkAndRequestPermissions();
+//                if(askPermissionAndBrowseFile()) {
+//                    Log.d("QR_11","hiiiiiii");
+//                    openInGallery();
+//                } else {
+//                    Log.d("QR_READER", "ERROR PERMISSION");
+//                }
             }
         });
 
@@ -122,7 +123,28 @@ public class QrActivity extends AppCompatActivity {
 //        someActivityResultLauncher.launch(intent);
         startActivityForResult(intent, 0);
     }
+    private void checkAndRequestPermissions() {
+        // Permissions to request
+        String[] permissions = {
+                Manifest.permission.READ_MEDIA_IMAGES,
+                Manifest.permission.READ_MEDIA_VIDEO,
+                Manifest.permission.READ_MEDIA_AUDIO
+        };
 
+        // Check if permissions are not granted
+        boolean shouldRequestPermissions = false;
+        for (String permission : permissions) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                shouldRequestPermissions = true;
+                break;
+            }
+        }
+
+        // Request permissions
+        if (shouldRequestPermissions) {
+            ActivityCompat.requestPermissions(this, permissions, MY_REQUEST_CODE_PERMISSION);
+        }
+    }
     private boolean askPermissionAndBrowseFile()  {
         // With Android Level >= 23, you have to ask the user
         // for permission to access External Storage.
