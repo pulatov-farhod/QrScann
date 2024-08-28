@@ -1,5 +1,5 @@
 package com.qrscan.plugin;
-
+import com.qrscan.plugin.R;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
