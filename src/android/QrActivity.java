@@ -51,7 +51,7 @@ import android.widget.Toast;
 
 //import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
-public class MainActivity extends AppCompatActivity {
+public class QrActivity extends AppCompatActivity {
 //    private ZXingScannerView mScannerView;
 
     private static final int ZXING_CAMERA_PERMISSION = 1;
@@ -65,11 +65,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         context = getApplicationContext();
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             Log.d("QR_READER", "TRY PERMISSION CAMERA");
-            mClss =  MainActivity.class;
+            mClss =  QrActivity.class;
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, ZXING_CAMERA_PERMISSION);
         }
         else {
