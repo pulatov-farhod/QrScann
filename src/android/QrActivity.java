@@ -64,8 +64,8 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
     public void onCreate(Bundle state) {
         super.onCreate(state);
 
-        getActionBar().hide();
-        //getSupportActionBar().hide();
+//        getActionBar().hide();
+        getSupportActionBar().hide();
         Intent intent = getIntent();
         context = getApplicationContext();
         String package_name = getApplication().getPackageName();
