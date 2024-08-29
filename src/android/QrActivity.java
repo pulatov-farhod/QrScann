@@ -60,11 +60,15 @@ public class QrActivity extends AppCompatActivity {
     private static final int MY_REQUEST_CODE_PERMISSION = 1000;
     private static final int MY_RESULT_CODE_FILECHOOSER = 2000;
     int SELECT_PICTURE = 200;
-    private static List<BarcodeFormat> formats = new ArrayList<>();
     Context context;
+    private static List<BarcodeFormat> formats = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getActionBar().hide();
+        //getSupportActionBar().hide();
+        Intent intent = getIntent();
         context = getApplicationContext();
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             Log.d("QR_READER", "TRY PERMISSION CAMERA");
@@ -74,11 +78,13 @@ public class QrActivity extends AppCompatActivity {
         else {
             Log.d("QR_READER", "ERROR PERMISSION CAMERA");
         }
+        formats.add(BarcodeFormat.QR_CODE);
+        formats.add(BarcodeFormat.CODE_128);
         String package_name = getApplication().getPackageName();
         Button btn = findViewById(getApplication().getResources().getIdentifier("button", "id", package_name));
         Button btn2 = findViewById(getApplication().getResources().getIdentifier("button2", "id", package_name));
         Button btn3 = findViewById(getApplication().getResources().getIdentifier("button3", "id", package_name));
-        String dt =intent.getStringExtra("LNG");
+        String dt = intent.getStringExtra("LNG");
         if(dt.equals("tj")||dt.equals("TJ")){
             btn.setText("Боргирии QR аз галерея");
             btn3.setText("Чароғак");
