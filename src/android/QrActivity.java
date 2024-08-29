@@ -66,7 +66,7 @@ public class QrActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActionBar().hide();
+//        getActionBar().hide();
         //getSupportActionBar().hide();
         Intent intent = getIntent();
         context = getApplicationContext();
