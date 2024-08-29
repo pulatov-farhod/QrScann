@@ -49,6 +49,7 @@ import android.graphics.Paint;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.Manifest.permission.READ_MEDIA_IMAGES;
 import static android.Manifest.permission.READ_MEDIA_VIDEO;
+
 public class QrActivity extends Activity implements ZXingScannerView.ResultHandler {
     private ZXingScannerView mScannerView;
     private static final int ZXING_CAMERA_PERMISSION = 1;
@@ -58,7 +59,7 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
     private static final int MY_RESULT_CODE_FILECHOOSER = 2000;
 
     private static List<BarcodeFormat> formats = new ArrayList<>();
-
+    Context context;
     @Override
     public void onCreate(Bundle state) {
         super.onCreate(state);
@@ -66,7 +67,7 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
         getActionBar().hide();
         //getSupportActionBar().hide();
         Intent intent = getIntent();
-
+        context = getApplicationContext();
         String package_name = getApplication().getPackageName();
         setContentView(getApplication().getResources().getIdentifier("activity_qr", "layout", package_name));
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
