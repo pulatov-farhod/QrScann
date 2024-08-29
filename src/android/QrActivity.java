@@ -78,6 +78,14 @@ public class QrActivity extends AppCompatActivity {
         Button btn = findViewById(getApplication().getResources().getIdentifier("button", "id", package_name));
         Button btn2 = findViewById(getApplication().getResources().getIdentifier("button2", "id", package_name));
         Button btn3 = findViewById(getApplication().getResources().getIdentifier("button3", "id", package_name));
+        String dt =intent.getStringExtra("LNG");
+        if(dt.equals("tj")||dt.equals("TJ")){
+            btn.setText("Боргирии QR аз галерея");
+            btn3.setText("Чароғак");
+        }else if(dt.equals("ru") || dt.equals("RU")){
+            btn.setText("QR загрузить с галереи");
+            btn3.setText("Фонарик");
+        }
 //        mScannerView = new ZXingScannerView(this);
         btn.setOnClickListener( new View.OnClickListener() {
 
