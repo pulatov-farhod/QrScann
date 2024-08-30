@@ -255,11 +255,9 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
 
                         Intent data = result.getData();
                         if (data != null) {
-                            String qrResult = data.getStringExtra("QrResult");
-                            Uri selectedImageUri = Uri.parse(qrResult);
+                            Uri selectedImageUri =  data.getData();
                             try {
 //                                    Uri selectedImageUri = result.getData().getData();
-
                                 final InputStream imageStream = context.getContentResolver().openInputStream(selectedImageUri);
 
                                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
