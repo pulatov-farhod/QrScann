@@ -32,7 +32,6 @@ import com.journeyapps.barcodescanner.ViewfinderView;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.RGBLuminanceSource;
 import com.google.zxing.Reader;
-import com.google.zxing.Result;
 import java.util.Random;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -53,7 +52,8 @@ import com.google.zxing.MultiFormatReader;
 import com.google.zxing.NotFoundException;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
-
+import com.google.zxing.Result;
+import com.google.zxing.ResultPoint;
 import com.journeyapps.barcodescanner.BarcodeCallback;
 import com.journeyapps.barcodescanner.BarcodeResult;
 import com.journeyapps.barcodescanner.CaptureManager;
