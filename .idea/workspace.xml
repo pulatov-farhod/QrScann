@@ -6,10 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="5fd13fac-f7ed-4beb-ba9c-ed7255495889" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/android/activity_qr.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/android/activity_qr.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/android/qrclose.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/android/drawable/qrclose.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/android/qrflash_off.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/android/drawable/qrflash_off.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/android/qrflash_on.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/android/drawable/qrflash_on.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/android/QrActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/android/QrActivity.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

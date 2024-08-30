@@ -233,6 +233,7 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
                         Uri selectedImageUri = result.getData().getData();
                         // Handle the selected image URI
                         Toast.makeText(this, "Image Selected: " + selectedImageUri.toString(), Toast.LENGTH_SHORT).show();
+                        setResult(Activity.RESULT_OK, new Intent().putExtra("QrResult", content));
                     }
                 }
         );
