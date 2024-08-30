@@ -251,16 +251,23 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
                 result -> {
                     Log.d("RESULT++",String.valueOf(cnt));
                     if (result.getResultCode() == Activity.RESULT_OK) {
-                        Uri selectedImageUri = result.getData().getData();
 
-                        final InputStream imageStream = context.getContentResolver().openInputStream(selectedImageUri);
+                        try{
+                            Uri selectedImageUri = result.getData().getData();
 
-                        final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                        String qrStr = scanQRImage(selectedImage);
+                            final InputStream imageStream = context.getContentResolver().openInputStream(selectedImageUri);
 
-                        // Handle the selected image URI
-                        Toast.makeText(this, "Image Selected: " + selectedImageUri.toString()+" QR:  "+qrStr, Toast.LENGTH_SHORT).show();
-                        setResult(Activity.RESULT_OK, new Intent().putExtra("QrResult", selectedImageUri.toString()));
+                            final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                            String qrStr = scanQRImage(selectedImage);
+
+                            // Handle the selected image URI
+                            Toast.makeText(this, "Image Selected: " + selectedImageUri.toString()+" QR:  "+qrStr, Toast.LENGTH_SHORT).show();
+                            setResult(Activity.RESULT_OK, new Intent().putExtra("QrResult", selectedImageUri.toString()));
+                        } catch(FileNotFoundException e) {
+                            e.printStackTrace();
+                            // Handle the error, maybe notify the user that the file wasn't found
+                        }
+
                     }
                 }
         );
