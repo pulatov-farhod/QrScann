@@ -144,7 +144,7 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
         capture.initializeFromIntent(getIntent(), savedInstanceState);
         capture.setShowMissingCameraPermissionDialog(false);
 //        capture.decode();
-        startScanning()
+        startScanning();
         //barcodeLauncher.launch(capture);
 
 //        ScanOptions options = new ScanOptions();
