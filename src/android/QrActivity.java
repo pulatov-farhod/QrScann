@@ -95,6 +95,9 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
         flash_btn = findViewById(getApplication().getResources().getIdentifier("flash_btn", "id", package_name));
         get_img_btn = findViewById(getApplication().getResources().getIdentifier("get_img_btn", "id", package_name));
 
+        IntentIntegrator integrator = new IntentIntegrator(this);
+        integrator.setCaptureActivity(QrActivity.class);
+        integrator.initiateScan();
 //        String dt = intent.getStringExtra("LNG");
 //        Log.d("LNG",dt);
 //        if(dt.equals("tj")||dt.equals("TJ")){
@@ -321,7 +324,21 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
 
 
     }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        Log.d("onActivityResult", "onActivityResult: .");
+        if (resultCode == Activity.RESULT_OK) {
+            IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+            String re = scanResult.getContents();
+            String message = re;
+            Log.d("onActivityResult", "onActivityResult: ." + re);
+            Result handlerResult = new Result(Result.STATUS_SUCCESS, "qrcode", message);
+            resultHandler.onHandleResult(handlerResult);
+        }
+        // else continue with any other code you need in the method
+        this.finish();
 
+    }
 
 
 

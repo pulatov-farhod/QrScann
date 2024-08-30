@@ -35,7 +35,7 @@ public class QrScann extends CordovaPlugin  {
         Context context = cordova.getActivity().getApplicationContext();
         if(action.equals("qrRun")) {
             String lng = args.getString(0);
-            this.openQrActivity2(context,lng);
+            this.openQrActivity(context,lng);
 
             PluginResult pluginResult = new  PluginResult(PluginResult.Status.NO_RESULT);
             pluginResult.setKeepCallback(true); // Keep callback
@@ -75,7 +75,7 @@ public class QrScann extends CordovaPlugin  {
 //        Intent intent = new Intent(context, QrActivity.class);
 //        intent.putExtra("LNG",lng);
 
-        cordova.startActivityForResult((CordovaPlugin) this, options, 0);
+//        cordova.startActivityForResult((CordovaPlugin) this, options, 0);
     }
 
     private void openQrActivity(Context context,String lng) {
