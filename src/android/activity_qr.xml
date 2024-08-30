@@ -39,24 +39,26 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <Button
-                android:id="@+id/flash_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/close_btn"
+                android:background="@color/zxing_transparent"
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:onClick="switchFlashlight"
-                android:text="Фонарик"/>
-            <Button
-                android:id="@+id/close_btn"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="40dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:translationZ="9999dp"
-                android:text="X"/>
+                app:srcCompat="@drawable/qrclose" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/flash_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="40dp"
+                android:onClick="switchFlashlight"
+                app:srcCompat="@drawable/qrflash_off" />
             <Button
                 android:id="@+id/get_img_btn"
                 android:layout_width="wrap_content"

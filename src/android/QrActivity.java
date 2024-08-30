@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import androidx.appcompat.widget.AppCompatImageView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -36,8 +37,8 @@ import java.util.Random;
  */
 public class QrActivity extends AppCompatActivity implements DecoratedBarcodeView.TorchListener {
     Button get_img_btn;
-    Button close_btn;
-    Button flash_btn;
+    AppCompatImageView close_btn;
+    AppCompatImageView flash_btn;
     private CaptureManager capture;
     private DecoratedBarcodeView barcodeScannerView;
     private Button switchFlashlightButton;
@@ -50,10 +51,12 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
     private ActivityResultLauncher<String[]> requestPermissionsLauncher;
     int cnt = 0;
     private boolean isFlashOn = false;
+    String package_name;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String package_name = getApplication().getPackageName();
+        package_name = getApplication().getPackageName();
         Intent intent = getIntent();
 
         setContentView(getApplication().getResources().getIdentifier("activity_qr", "layout", package_name));
@@ -175,9 +178,11 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
     public void switchFlashlight(View view) {
         if (!isFlashOn) {
             barcodeScannerView.setTorchOn();
+            flash_btn.setImageResource(getApplication().getResources().getIdentifier("qrflash_on", "drawable", package_name));
             isFlashOn = true;
         } else {
             barcodeScannerView.setTorchOff();
+            flash_btn.setImageResource(getApplication().getResources().getIdentifier("qrflash_off", "drawable", package_name));
             isFlashOn = false;
         }
     }
