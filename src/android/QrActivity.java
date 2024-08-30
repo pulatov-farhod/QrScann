@@ -28,7 +28,6 @@ import android.content.Context;
 import com.google.zxing.client.android.Intents;
 import com.journeyapps.barcodescanner.CaptureManager;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
-import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ViewfinderView;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.RGBLuminanceSource;
@@ -52,7 +51,9 @@ import com.google.zxing.FormatException;
 import com.google.zxing.LuminanceSource;
 import com.google.zxing.MultiFormatReader;
 import com.google.zxing.NotFoundException;
-
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
+import com.mikepenz.aboutlibraries.LibsBuilder;
 /**
  * Custom Scannner Activity extending from Activity to display a custom layout form scanner view.
  */
