@@ -257,7 +257,7 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
                         if (data != null) {
                             String qrResult = data.getStringExtra("QrResult");
                             Uri selectedImageUri = Uri.parse(qrResult);
-                            try{
+                            try {
 //                                    Uri selectedImageUri = result.getData().getData();
 
                                 final InputStream imageStream = context.getContentResolver().openInputStream(selectedImageUri);
@@ -269,10 +269,11 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
                                 setResult(Activity.RESULT_OK, resultIntent);
                                 finish();
                                 // Handle the selected image URI
-                            } catch(FileNotFoundException e) {
+                            } catch (FileNotFoundException e) {
                                 e.printStackTrace();
                                 // Handle the error, maybe notify the user that the file wasn't found
                             }
+                        }
 
                     }
                 }
