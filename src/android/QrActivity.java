@@ -281,18 +281,19 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
                 }
         );
 
-        barcodeLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+        barcodeLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getData() == null) {
                         Intent originalIntent = result.getData();
                         if (originalIntent == null) {
-                            Toast.makeText(CustomScannerActivity.this, "Cancelled", Toast.LENGTH_LONG).show();
+                            Toast.makeText(QrActivity.this, "Cancelled", Toast.LENGTH_LONG).show();
                         } //else if (originalIntent.hasExtra(Intents.Scan.MISSING_CAMERA_PERMISSION)) {
                           //  Toast.makeText(CustomScannerActivity.this, "Cancelled due to missing camera permission", Toast.LENGTH_LONG).show();
                         //}
                     } else {
                         //Log.d("MainActivity", "Scanned");
-                        Toast.makeText(CustomScannerActivity.this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(QrActivity.this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
                         resultIntent.putExtra("QrResult", result.getContents());
                         setResult(Activity.RESULT_OK, resultIntent);
 //                        finish();
