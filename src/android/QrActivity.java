@@ -70,7 +70,7 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
     private static final int REQUEST_GALLERY = 200;
     private ActivityResultLauncher<Intent> galleryLauncher;
     private ActivityResultLauncher<String[]> requestPermissionsLauncher;
-    private ActivityResultLauncher<Intent> barcodeLauncher;
+    private ActivityResultLauncher<ScanOptions> barcodeLauncher;
 
     int cnt = 0;
     private boolean isFlashOn = false;
@@ -130,11 +130,19 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
         // if the device does not have flashlight in its camera,
         // then remove the switch flashlight button...
 
-        capture = new CaptureManager(this, barcodeScannerView);
-        capture.initializeFromIntent(getIntent(), savedInstanceState);
-        capture.setShowMissingCameraPermissionDialog(false);
-        capture.decode();
-        barcodeLauncher.launch(capture);
+//        capture = new CaptureManager(this, barcodeScannerView);
+//        capture.initializeFromIntent(getIntent(), savedInstanceState);
+//        capture.setShowMissingCameraPermissionDialog(false);
+//        capture.decode();
+        //barcodeLauncher.launch(capture);
+
+        ScanOptions options = new ScanOptions();
+        options.setCaptureActivity(this.class);
+        options.setDesiredBarcodeFormats(ScanOptions.ONE_D_CODE_TYPES);
+        options.setPrompt("Scan something");
+        options.setOrientationLocked(false);
+        options.setBeepEnabled(false);
+        barcodeLauncher.launch(options);
 
         changeMaskColor(null);
         changeLaserVisibility(true);
@@ -282,7 +290,7 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
         );
 
         barcodeLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
+                new ScanContract(),
                 result -> {
                     Intent resultIntent = new Intent();
                     if (result.getData() == null) {
@@ -300,6 +308,8 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
 //                        finish();
                     }
                 });
+
+
     }
 
 
