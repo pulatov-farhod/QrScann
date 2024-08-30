@@ -325,19 +325,20 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
 
     }
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        Log.d("onActivityResult", "onActivityResult: .");
-        if (resultCode == Activity.RESULT_OK) {
-            IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
-            String re = scanResult.getContents();
-            String message = re;
-            Log.d("onActivityResult", "onActivityResult: ." + re);
-//            Result handlerResult = new Result(Result.STATUS_SUCCESS, "qrcode", message);
-//            resultHandler.onHandleResult(handlerResult);
-        }
-        // else continue with any other code you need in the method
-        this.finish();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (result != null) {
+            if (result.getContents() == null) {
+                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                // You can process the scanned QR code here
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
 
