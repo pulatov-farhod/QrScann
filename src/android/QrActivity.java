@@ -75,7 +75,7 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
     private ActivityResultLauncher<Intent> galleryLauncher;
     private ActivityResultLauncher<String[]> requestPermissionsLauncher;
     private ActivityResultLauncher<ScanOptions> barcodeLauncher;
-    ResultHandler resultHandler;
+//    ResultHandler resultHandler;
     int cnt = 0;
     private boolean isFlashOn = false;
     String package_name;
@@ -332,8 +332,8 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
             String re = scanResult.getContents();
             String message = re;
             Log.d("onActivityResult", "onActivityResult: ." + re);
-            Result handlerResult = new Result(Result.STATUS_SUCCESS, "qrcode", message);
-            resultHandler.onHandleResult(handlerResult);
+//            Result handlerResult = new Result(Result.STATUS_SUCCESS, "qrcode", message);
+//            resultHandler.onHandleResult(handlerResult);
         }
         // else continue with any other code you need in the method
         this.finish();
