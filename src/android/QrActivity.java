@@ -58,6 +58,7 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
 
         setContentView(getApplication().getResources().getIdentifier("activity_custom_scanner", "layout", package_name));
         barcodeScannerView = findViewById(getApplication().getResources().getIdentifier("zxing_barcode_scanner", "id", package_name));
+        viewfinderView = findViewById(getApplication().getResources().getIdentifier("zxing_viewfinder_view", "id", package_name));
         barcodeScannerView.setTorchListener(this);
         close_btn = findViewById(getApplication().getResources().getIdentifier("close_btn", "id", package_name));
         flash_btn = findViewById(getApplication().getResources().getIdentifier("flash_btn", "id", package_name));
@@ -96,7 +97,7 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
             }
         });
 
-        viewfinderView = findViewById(R.id.zxing_viewfinder_view);
+
 
         // if the device does not have flashlight in its camera,
         // then remove the switch flashlight button...
