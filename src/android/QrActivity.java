@@ -54,9 +54,12 @@ import com.google.zxing.NotFoundException;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
-
+import com.journeyapps.barcodescanner.BarcodeCallback;
+import com.journeyapps.barcodescanner.BarcodeResult;
+import com.journeyapps.barcodescanner.CaptureManager;
+import com.journeyapps.barcodescanner.DecoratedBarcodeView;
+import com.journeyapps.barcodescanner.ScanOptions;
+import com.journeyapps.barcodescanner.ViewfinderView;
 /**
  * Custom Scannner Activity extending from Activity to display a custom layout form scanner view.
  */
@@ -95,9 +98,7 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
         flash_btn = findViewById(getApplication().getResources().getIdentifier("flash_btn", "id", package_name));
         get_img_btn = findViewById(getApplication().getResources().getIdentifier("get_img_btn", "id", package_name));
 
-        IntentIntegrator integrator = new IntentIntegrator(this);
-        integrator.setCaptureActivity(QrActivity.class);
-        integrator.initiateScan();
+
 //        String dt = intent.getStringExtra("LNG");
 //        Log.d("LNG",dt);
 //        if(dt.equals("tj")||dt.equals("TJ")){
@@ -142,7 +143,8 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
         capture = new CaptureManager(this, barcodeScannerView);
         capture.initializeFromIntent(getIntent(), savedInstanceState);
         capture.setShowMissingCameraPermissionDialog(false);
-        capture.decode();
+//        capture.decode();
+        startScanning()
         //barcodeLauncher.launch(capture);
 
 //        ScanOptions options = new ScanOptions();
@@ -157,6 +159,28 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
 //        changeMaskColor(null);
 //        changeLaserVisibility(true);
 
+    }
+
+    private void startScanning() {
+        barcodeScannerView.decodeContinuous(new BarcodeCallback() {
+            @Override
+            public void barcodeResult(BarcodeResult result) {
+                // Handle the result here
+                String qrResult = result.getText();
+                Log.d("QRScannerActivity", "Scanned: " + qrResult);
+
+                // Return the result to the calling activity
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("QrResult", qrResult);
+                setResult(RESULT_OK, resultIntent);
+                finish(); // Close the scanner activity
+            }
+
+            @Override
+            public void possibleResultPoints(List<ResultPoint> resultPoints) {
+                // You can handle the result points here if needed
+            }
+        });
     }
 
     private void requestPermissions() {
@@ -299,28 +323,28 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
                 }
         );
 
-        barcodeLauncher = registerForActivityResult(
-                new ScanContract(),
-                result -> {
-                    Intent resultIntent = new Intent();
-
-                    if(result.getContents() == null) {
-                        Intent originalIntent = result.getOriginalIntent();
-                        if (originalIntent == null) {
-                            Log.d("MainActivity", "Cancelled scan");
-                            Toast.makeText(QrActivity.this, "Cancelled", Toast.LENGTH_LONG).show();
-                        } else if(originalIntent.hasExtra(Intents.Scan.MISSING_CAMERA_PERMISSION)) {
-                            Log.d("MainActivity", "Cancelled scan due to missing camera permission");
-                            Toast.makeText(QrActivity.this, "Cancelled due to missing camera permission", Toast.LENGTH_LONG).show();
-                        }
-                    } else {
-                        Log.d("MainActivity", "Scanned");
-                        Toast.makeText(QrActivity.this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
-                        resultIntent.putExtra("QrResult", result.getContents());
-                        setResult(Activity.RESULT_OK, resultIntent);
-                    }
-
-                });
+//        barcodeLauncher = registerForActivityResult(
+//                new ScanContract(),
+//                result -> {
+//                    Intent resultIntent = new Intent();
+//
+//                    if(result.getContents() == null) {
+//                        Intent originalIntent = result.getOriginalIntent();
+//                        if (originalIntent == null) {
+//                            Log.d("MainActivity", "Cancelled scan");
+//                            Toast.makeText(QrActivity.this, "Cancelled", Toast.LENGTH_LONG).show();
+//                        } else if(originalIntent.hasExtra(Intents.Scan.MISSING_CAMERA_PERMISSION)) {
+//                            Log.d("MainActivity", "Cancelled scan due to missing camera permission");
+//                            Toast.makeText(QrActivity.this, "Cancelled due to missing camera permission", Toast.LENGTH_LONG).show();
+//                        }
+//                    } else {
+//                        Log.d("MainActivity", "Scanned");
+//                        Toast.makeText(QrActivity.this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+//                        resultIntent.putExtra("QrResult", result.getContents());
+//                        setResult(Activity.RESULT_OK, resultIntent);
+//                    }
+//
+//                });
 
 
     }
