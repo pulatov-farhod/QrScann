@@ -284,6 +284,7 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
         barcodeLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
+                    Intent resultIntent = new Intent();
                     if (result.getData() == null) {
                         Intent originalIntent = result.getData();
                         if (originalIntent == null) {
