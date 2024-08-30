@@ -13,7 +13,12 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.google.zxing.client.android.Intents;
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
+import com.mikepenz.aboutlibraries.LibsBuilder;
 
 /**
  * This class echoes a string called from JavaScript.
@@ -31,7 +36,7 @@ public class QrScann extends CordovaPlugin  {
         Context context = cordova.getActivity().getApplicationContext();
         if(action.equals("qrRun")) {
             String lng = args.getString(0);
-            this.openQrActivity(context,lng);
+            this.openQrActivity2(context,lng);
 
             PluginResult pluginResult = new  PluginResult(PluginResult.Status.NO_RESULT);
             pluginResult.setKeepCallback(true); // Keep callback
@@ -39,6 +44,41 @@ public class QrScann extends CordovaPlugin  {
             return true;
         }
         return false;
+    }
+
+    private final ActivityResultLauncher<ScanOptions> barcodeLauncher = registerForActivityResult(new ScanContract(),
+            result -> {
+                if(result.getContents() == null) {
+                    Intent originalIntent = result.getOriginalIntent();
+                    if (originalIntent == null) {
+                        Log.d("MainActivity", "Cancelled scan");
+                        Toast.makeText(MainActivity.this, "Cancelled", Toast.LENGTH_LONG).show();
+                    } else if(originalIntent.hasExtra(Intents.Scan.MISSING_CAMERA_PERMISSION)) {
+                        Log.d("MainActivity", "Cancelled scan due to missing camera permission");
+                        Toast.makeText(MainActivity.this, "Cancelled due to missing camera permission", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Log.d("MainActivity", "Scanned");
+                    Toast.makeText(MainActivity.this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+
+                    PluginResult resultado = new PluginResult(PluginResult.Status.OK, result.getContents());
+                    resultado.setKeepCallback(true);
+                    this.callbackContext.sendPluginResult(resultado);
+
+                }
+            });
+
+    private void openQrActivity2(Context context,String lng) {
+
+
+
+        ScanOptions options = new ScanOptions().setOrientationLocked(false).setCaptureActivity(QrActivity.class);
+        barcodeLauncher.launch(options);
+
+//        Intent intent = new Intent(context, QrActivity.class);
+//        intent.putExtra("LNG",lng);
+//
+//        cordova.startActivityForResult((CordovaPlugin) this, intent, 0);
     }
 
     private void openQrActivity(Context context,String lng) {
