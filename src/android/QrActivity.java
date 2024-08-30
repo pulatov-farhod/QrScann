@@ -29,7 +29,12 @@ import com.journeyapps.barcodescanner.CaptureManager;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ViewfinderView;
-
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.LuminanceSource;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.RGBLuminanceSource;
+import com.google.zxing.Reader;
+import com.google.zxing.Result;
 import java.util.Random;
 
 /**
@@ -235,7 +240,7 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
                         final InputStream imageStream = getContentResolver().openInputStream(selectedImageUri);
 
                         final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                        string qrStr = scanQRImage(selectedImage);
+                        String qrStr = scanQRImage(selectedImage);
 
                         // Handle the selected image URI
                         Toast.makeText(this, "Image Selected: " + selectedImageUri.toString()+" QR:  "+qrStr, Toast.LENGTH_SHORT).show();
