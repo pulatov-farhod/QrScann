@@ -23,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import android.content.Context;
 
 import com.google.zxing.client.android.Intents;
 import com.journeyapps.barcodescanner.CaptureManager;
@@ -66,12 +67,13 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
     int cnt = 0;
     private boolean isFlashOn = false;
     String package_name;
-
+    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         package_name = getApplication().getPackageName();
         Intent intent = getIntent();
+        context = getApplicationContext();
 
         setContentView(getApplication().getResources().getIdentifier("activity_qr", "layout", package_name));
         barcodeScannerView = findViewById(getApplication().getResources().getIdentifier("zxing_barcode_scanner", "id", package_name));
@@ -246,7 +248,7 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
 
                         Uri selectedImageUri = result.getData().getData();
 
-                        final InputStream imageStream = getContentResolver().openInputStream(selectedImageUri);
+                        final InputStream imageStream = context.getContentResolver().openInputStream(selectedImageUri);
 
                         final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
                         String qrStr = scanQRImage(selectedImage);
@@ -259,6 +261,49 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
         );
     }
 
+
+    private static String readQRCodeFromImage(Context context,Uri imageUri) {
+        try {
+            InputStream inputStream = context.getContentResolver().openInputStream(imageUri);
+            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+            String qrContent = readQRCode(bitmap);
+
+            if (qrContent != null) {
+                // QR code successfully read
+                Log.d("QRCodeReader", "QR Code content: " + qrContent);
+                // Do something with the QR code content
+            } else {
+                // Failed to read QR code
+                Log.d("QRCodeReader", "No QR Code found in the image");
+            }
+            return qrContent;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+
+        }
+    }
+    private static String readQRCode(Bitmap bitmap) {
+        try {
+            int width = bitmap.getWidth();
+            int height = bitmap.getHeight();
+            int[] pixels = new int[width * height];
+            bitmap.getPixels(pixels, 0, width, 0, 0, width, height);
+
+            RGBLuminanceSource source = new RGBLuminanceSource(width, height, pixels);
+            BinaryBitmap binaryBitmap = new BinaryBitmap(new HybridBinarizer(source));
+
+            Reader reader = new MultiFormatReader();
+            Result result = reader.decode(binaryBitmap);
+
+            return result.getText();
+        } catch (Resources.NotFoundException | ChecksumException | FormatException e) {
+            e.printStackTrace();
+            return null;
+        } catch (NotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public static String scanQRImage(Bitmap bMap) {
         String contents = null;
 
