@@ -36,7 +36,8 @@ import com.google.zxing.RGBLuminanceSource;
 import com.google.zxing.Reader;
 import com.google.zxing.Result;
 import java.util.Random;
-
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import com.google.zxing.client.android.Intents;
 import com.google.zxing.common.HybridBinarizer;
 
