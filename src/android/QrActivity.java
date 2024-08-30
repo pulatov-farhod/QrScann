@@ -75,7 +75,7 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
     private ActivityResultLauncher<Intent> galleryLauncher;
     private ActivityResultLauncher<String[]> requestPermissionsLauncher;
     private ActivityResultLauncher<ScanOptions> barcodeLauncher;
-
+    ResultHandler resultHandler;
     int cnt = 0;
     private boolean isFlashOn = false;
     String package_name;
