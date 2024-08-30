@@ -137,7 +137,7 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
         //barcodeLauncher.launch(capture);
 
         ScanOptions options = new ScanOptions();
-        options.setCaptureActivity(this.class);
+        options.setCaptureActivity(QrActivity.class);
         options.setDesiredBarcodeFormats(ScanOptions.ONE_D_CODE_TYPES);
         options.setPrompt("Scan something");
         options.setOrientationLocked(false);
