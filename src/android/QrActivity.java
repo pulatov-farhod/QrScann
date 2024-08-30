@@ -231,12 +231,40 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
                     if (result.getResultCode() == Activity.RESULT_OK) {
 
                         Uri selectedImageUri = result.getData().getData();
+
+                        final InputStream imageStream = getContentResolver().openInputStream(selectedImageUri);
+
+                        final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                        string qrStr = scanQRImage(selectedImage);
+
                         // Handle the selected image URI
-                        Toast.makeText(this, "Image Selected: " + selectedImageUri.toString(), Toast.LENGTH_SHORT).show();
-                        setResult(Activity.RESULT_OK, new Intent().putExtra("QrResult", content));
+                        Toast.makeText(this, "Image Selected: " + selectedImageUri.toString()+" QR:  "+qrStr, Toast.LENGTH_SHORT).show();
+                        setResult(Activity.RESULT_OK, new Intent().putExtra("QrResult", selectedImageUri.toString()));
                     }
                 }
         );
+    }
+
+    public static String scanQRImage(Bitmap bMap) {
+        String contents = null;
+
+        int[] intArray = new int[bMap.getWidth()*bMap.getHeight()];
+        //copy pixel data from the Bitmap into the 'intArray' array
+        bMap.getPixels(intArray, 0, bMap.getWidth(), 0, 0, bMap.getWidth(), bMap.getHeight());
+
+        LuminanceSource source = new RGBLuminanceSource(bMap.getWidth(), bMap.getHeight(), intArray);
+        BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
+
+        Reader reader = new MultiFormatReader();
+        try {
+            Result result = reader.decode(bitmap);
+            contents = result.getText();
+        }
+        catch (Exception e) {
+            //contents = "";
+            Log.e("QR_READER", "error img", e);
+        }
+        return contents;
     }
     public void openInGallery() {
         cnt++;
