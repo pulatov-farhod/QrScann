@@ -53,6 +53,9 @@ import com.google.zxing.MultiFormatReader;
 import com.google.zxing.NotFoundException;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
+
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 /**
  * Custom Scannner Activity extending from Activity to display a custom layout form scanner view.
  */
@@ -108,6 +111,8 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
         else {
             Log.d("QR_READER", "ERROR PERMISSION CAMERA");
         }
+
+        new IntentIntegrator(QrActivity.this).initiateScan();
         // Initialize the ActivityResultLaunchers
         initializeActivityResultLaunchers();
 
@@ -136,16 +141,16 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
 //        capture.decode();
         //barcodeLauncher.launch(capture);
 
-        ScanOptions options = new ScanOptions();
-        options.setCaptureActivity(AnyOrientationCaptureActivity.class);
-        options.setDesiredBarcodeFormats(ScanOptions.ONE_D_CODE_TYPES);
-        options.setPrompt("Scan something");
-        options.setOrientationLocked(false);
-        options.setBeepEnabled(false);
-        barcodeLauncher.launch(options);
-
-        changeMaskColor(null);
-        changeLaserVisibility(true);
+//        ScanOptions options = new ScanOptions();
+//        options.setCaptureActivity(AnyOrientationCaptureActivity.class);
+//        options.setDesiredBarcodeFormats(ScanOptions.ONE_D_CODE_TYPES);
+//        options.setPrompt("Scan something");
+//        options.setOrientationLocked(false);
+//        options.setBeepEnabled(false);
+//        barcodeLauncher.launch(options);
+//
+//        changeMaskColor(null);
+//        changeLaserVisibility(true);
 
     }
 
@@ -314,7 +319,24 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
 
 
     }
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Intent resultIntent = new Intent();
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (result != null) {
+            if (result.getContents() == null) {
+                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                resultIntent.putExtra("QrResult", result.getContents());
+                setResult(Activity.RESULT_OK, resultIntent);
+                // You can process the scanned QR code here
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
 
 
 

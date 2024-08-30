@@ -11,12 +11,6 @@
 
          <config-file target="AndroidManifest.xml" parent="/manifest/application" >
             <activity android:label="Qr Activity" android:name="com.qrscan.plugin.QrActivity"  android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
-             <activity
-                 android:name=".AnyOrientationCaptureActivity"
-                 android:screenOrientation="fullSensor"
-                 android:stateNotNeeded="true"
-                 android:theme="@style/zxing_CaptureTheme"
-                 android:windowSoftInputMode="stateAlwaysHidden"></activity>
         </config-file>
         <config-file target="AndroidManifest.xml" parent="/manifest">
 
