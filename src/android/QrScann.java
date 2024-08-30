@@ -18,7 +18,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import com.google.zxing.client.android.Intents;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
-
+import com.journeyapps.barcodescanner.ScanContract;
 /**
  * This class echoes a string called from JavaScript.
  */
