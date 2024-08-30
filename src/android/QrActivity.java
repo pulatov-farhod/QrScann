@@ -40,7 +40,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import com.google.zxing.client.android.Intents;
 import com.google.zxing.common.HybridBinarizer;
-
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 /**
  * Custom Scannner Activity extending from Activity to display a custom layout form scanner view.
  */
