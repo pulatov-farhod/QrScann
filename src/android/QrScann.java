@@ -45,40 +45,37 @@ public class QrScann extends CordovaPlugin  {
         return false;
     }
 
-    private final ActivityResultLauncher<ScanOptions> barcodeLauncher = registerForActivityResult(new ScanContract(),
-            result -> {
-                if(result.getContents() == null) {
-                    Intent originalIntent = result.getOriginalIntent();
-                    Context context = cordova.getActivity().getApplicationContext();
-                    if (originalIntent == null) {
-                        Log.d("MainActivity", "Cancelled scan");
-                        Toast.makeText(context, "Cancelled", Toast.LENGTH_LONG).show();
-                    } else if(originalIntent.hasExtra(Intents.Scan.MISSING_CAMERA_PERMISSION)) {
-                        Log.d("MainActivity", "Cancelled scan due to missing camera permission");
-                        Toast.makeText(context, "Cancelled due to missing camera permission", Toast.LENGTH_LONG).show();
-                    }
-                } else {
-                    Log.d("MainActivity", "Scanned");
-                    Toast.makeText(context, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
-
-                    PluginResult resultado = new PluginResult(PluginResult.Status.OK, result.getContents());
-                    resultado.setKeepCallback(true);
-                    this.callbackContext.sendPluginResult(resultado);
-
-                }
-            });
+//    private final ActivityResultLauncher<ScanOptions> barcodeLauncher = registerForActivityResult(new ScanContract(),
+//            result -> {
+//                if(result.getContents() == null) {
+//                    Intent originalIntent = result.getOriginalIntent();
+//                    Context context = cordova.getActivity().getApplicationContext();
+//                    if (originalIntent == null) {
+//                        Log.d("MainActivity", "Cancelled scan");
+//                    } else if(originalIntent.hasExtra(Intents.Scan.MISSING_CAMERA_PERMISSION)) {
+//                        Log.d("MainActivity", "Cancelled scan due to missing camera permission");
+//                    }
+//                } else {
+//                    Log.d("MainActivity", "Scanned");
+//
+//                    PluginResult resultado = new PluginResult(PluginResult.Status.OK, result.getContents());
+//                    resultado.setKeepCallback(true);
+//                    this.callbackContext.sendPluginResult(resultado);
+//
+//                }
+//            });
 
     private void openQrActivity2(Context context,String lng) {
 
 
 
         ScanOptions options = new ScanOptions().setOrientationLocked(false).setCaptureActivity(QrActivity.class);
-        barcodeLauncher.launch(options);
+//        barcodeLauncher.launch(options);
 
 //        Intent intent = new Intent(context, QrActivity.class);
 //        intent.putExtra("LNG",lng);
-//
-//        cordova.startActivityForResult((CordovaPlugin) this, intent, 0);
+
+        cordova.startActivityForResult((CordovaPlugin) this, options, 0);
     }
 
     private void openQrActivity(Context context,String lng) {
