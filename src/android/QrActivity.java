@@ -70,6 +70,8 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
     private static final int REQUEST_GALLERY = 200;
     private ActivityResultLauncher<Intent> galleryLauncher;
     private ActivityResultLauncher<String[]> requestPermissionsLauncher;
+    private ActivityResultLauncher<CaptureManager> barcodeLauncher;
+
     int cnt = 0;
     private boolean isFlashOn = false;
     String package_name;
@@ -88,6 +90,7 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
         close_btn = findViewById(getApplication().getResources().getIdentifier("close_btn", "id", package_name));
         flash_btn = findViewById(getApplication().getResources().getIdentifier("flash_btn", "id", package_name));
         get_img_btn = findViewById(getApplication().getResources().getIdentifier("get_img_btn", "id", package_name));
+
 //        String dt = intent.getStringExtra("LNG");
 //        Log.d("LNG",dt);
 //        if(dt.equals("tj")||dt.equals("TJ")){
@@ -131,6 +134,7 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
         capture.initializeFromIntent(getIntent(), savedInstanceState);
         capture.setShowMissingCameraPermissionDialog(false);
         capture.decode();
+        barcodeLauncher.launch(capture);
 
         changeMaskColor(null);
         changeLaserVisibility(true);
@@ -276,51 +280,29 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
                     }
                 }
         );
+
+        barcodeLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getData() == null) {
+                        Intent originalIntent = result.getData();
+                        if (originalIntent == null) {
+                            Toast.makeText(CustomScannerActivity.this, "Cancelled", Toast.LENGTH_LONG).show();
+                        } //else if (originalIntent.hasExtra(Intents.Scan.MISSING_CAMERA_PERMISSION)) {
+                          //  Toast.makeText(CustomScannerActivity.this, "Cancelled due to missing camera permission", Toast.LENGTH_LONG).show();
+                        //}
+                    } else {
+                        //Log.d("MainActivity", "Scanned");
+                        Toast.makeText(CustomScannerActivity.this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                        resultIntent.putExtra("QrResult", result.getContents());
+                        setResult(Activity.RESULT_OK, resultIntent);
+//                        finish();
+                    }
+                });
     }
 
 
-    private static String readQRCodeFromImage(Context context,Uri imageUri) {
-        try {
-            InputStream inputStream = context.getContentResolver().openInputStream(imageUri);
-            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-            String qrContent = readQRCode(bitmap);
 
-            if (qrContent != null) {
-                // QR code successfully read
-                Log.d("QRCodeReader", "QR Code content: " + qrContent);
-                // Do something with the QR code content
-            } else {
-                // Failed to read QR code
-                Log.d("QRCodeReader", "No QR Code found in the image");
-            }
-            return qrContent;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
 
-        }
-    }
-    private static String readQRCode(Bitmap bitmap) {
-        try {
-            int width = bitmap.getWidth();
-            int height = bitmap.getHeight();
-            int[] pixels = new int[width * height];
-            bitmap.getPixels(pixels, 0, width, 0, 0, width, height);
-
-            RGBLuminanceSource source = new RGBLuminanceSource(width, height, pixels);
-            BinaryBitmap binaryBitmap = new BinaryBitmap(new HybridBinarizer(source));
-
-            Reader reader = new MultiFormatReader();
-            Result result = reader.decode(binaryBitmap);
-
-            return result.getText();
-        } catch (Resources.NotFoundException | ChecksumException | FormatException e) {
-            e.printStackTrace();
-            return null;
-        } catch (NotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
     public static String scanQRImage(Bitmap bMap) {
         String contents = null;
 
