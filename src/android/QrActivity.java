@@ -53,7 +53,6 @@ import com.google.zxing.MultiFormatReader;
 import com.google.zxing.NotFoundException;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
-import com.mikepenz.aboutlibraries.LibsBuilder;
 /**
  * Custom Scannner Activity extending from Activity to display a custom layout form scanner view.
  */
