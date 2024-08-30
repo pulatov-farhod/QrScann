@@ -248,57 +248,34 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
         // Register the gallery launcher
         galleryLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        if (result.getResultCode() == Activity.RESULT_OK) {
-                            Intent data = result.getData();
-                            if (data != null) {
-                                String qrResult = data.getStringExtra("QrResult");
-                                Uri selectedImageUri = Uri.parse(qrResult);
-                                try{
+
+                result -> {
+                    Log.d("RESULT++",String.valueOf(cnt));
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+
+                        Intent data = result.getData();
+                        if (data != null) {
+                            String qrResult = data.getStringExtra("QrResult");
+                            Uri selectedImageUri = Uri.parse(qrResult);
+                            try{
 //                                    Uri selectedImageUri = result.getData().getData();
 
-                                    final InputStream imageStream = context.getContentResolver().openInputStream(selectedImageUri);
+                                final InputStream imageStream = context.getContentResolver().openInputStream(selectedImageUri);
 
-                                    final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                                    String qrStr = scanQRImage(selectedImage);
-                                    Intent resultIntent = new Intent();
-                                    resultIntent.putExtra("QrResult", selectedImageUri.toString());
-                                    setResult(Activity.RESULT_OK, resultIntent);
-                                    finish();
-                                    // Handle the selected image URI
-                                } catch(FileNotFoundException e) {
-                                    e.printStackTrace();
-                                    // Handle the error, maybe notify the user that the file wasn't found
-                                }
-                                // Handle the result here
+                                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                                String qrStr = scanQRImage(selectedImage);
+                                Intent resultIntent = new Intent();
+                                resultIntent.putExtra("QrResult", selectedImageUri.toString());
+                                setResult(Activity.RESULT_OK, resultIntent);
+                                finish();
+                                // Handle the selected image URI
+                            } catch(FileNotFoundException e) {
+                                e.printStackTrace();
+                                // Handle the error, maybe notify the user that the file wasn't found
                             }
-                        }
+
                     }
                 }
-//                result -> {
-//                    Log.d("RESULT++",String.valueOf(cnt));
-//                    if (result.getResultCode() == Activity.RESULT_OK) {
-//
-//                        try{
-//                            Uri selectedImageUri = result.getData().getData();
-//
-//                            final InputStream imageStream = context.getContentResolver().openInputStream(selectedImageUri);
-//
-//                            final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-//                            String qrStr = scanQRImage(selectedImage);
-//
-//                            // Handle the selected image URI
-//                            Toast.makeText(this, "Image Selected: " + selectedImageUri.toString()+" QR:  "+qrStr, Toast.LENGTH_SHORT).show();
-//                            setResult(Activity.RESULT_OK, new Intent().putExtra("QrResult", selectedImageUri.toString()));
-//                        } catch(FileNotFoundException e) {
-//                            e.printStackTrace();
-//                            // Handle the error, maybe notify the user that the file wasn't found
-//                        }
-//
-//                    }
-//                }
         );
     }
 
