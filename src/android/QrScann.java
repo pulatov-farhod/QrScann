@@ -52,14 +52,14 @@ public class QrScann extends CordovaPlugin  {
                     Intent originalIntent = result.getOriginalIntent();
                     if (originalIntent == null) {
                         Log.d("MainActivity", "Cancelled scan");
-                        Toast.makeText(MainActivity.this, "Cancelled", Toast.LENGTH_LONG).show();
+                        Toast.makeText(QrScann.this, "Cancelled", Toast.LENGTH_LONG).show();
                     } else if(originalIntent.hasExtra(Intents.Scan.MISSING_CAMERA_PERMISSION)) {
                         Log.d("MainActivity", "Cancelled scan due to missing camera permission");
-                        Toast.makeText(MainActivity.this, "Cancelled due to missing camera permission", Toast.LENGTH_LONG).show();
+                        Toast.makeText(QrScann.this, "Cancelled due to missing camera permission", Toast.LENGTH_LONG).show();
                     }
                 } else {
                     Log.d("MainActivity", "Scanned");
-                    Toast.makeText(MainActivity.this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(QrScann.this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
 
                     PluginResult resultado = new PluginResult(PluginResult.Status.OK, result.getContents());
                     resultado.setKeepCallback(true);
