@@ -57,7 +57,7 @@ public class QrActivity extends AppCompatActivity implements DecoratedBarcodeVie
         Intent intent = getIntent();
 
         setContentView(getApplication().getResources().getIdentifier("activity_custom_scanner", "layout", package_name));
-        barcodeScannerView = findViewById(R.id.zxing_barcode_scanner);
+        barcodeScannerView = findViewById(getApplication().getResources().getIdentifier("zxing_barcode_scanner", "id", package_name));
         barcodeScannerView.setTorchListener(this);
         close_btn = findViewById(getApplication().getResources().getIdentifier("close_btn", "id", package_name));
         flash_btn = findViewById(getApplication().getResources().getIdentifier("flash_btn", "id", package_name));
