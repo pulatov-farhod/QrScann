@@ -37,6 +37,9 @@ import com.google.zxing.Reader;
 import com.google.zxing.Result;
 import java.util.Random;
 
+import com.google.zxing.client.android.Intents;
+import com.google.zxing.common.HybridBinarizer;
+
 /**
  * Custom Scannner Activity extending from Activity to display a custom layout form scanner view.
  */
